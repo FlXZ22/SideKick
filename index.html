@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Sidekick</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.puter.com/v2/"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['SF Pro Display', 'SF Pro Text', 'SF Pro', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            primary: 'var(--primary-color)', // Dynamic CSS Variable
+            dark: '#1B1D1A',    // Charcoal
+            background: 'var(--bg-color)',
+            surface: 'var(--surface-color)',
+            textMain: 'var(--text-main)',
+            textSecondary: 'var(--text-secondary)',
+            border: 'var(--border-color)',
+          },
+          boxShadow: {
+            'soft': '0 8px 30px rgba(0, 0, 0, 0.06)', /* Slightly sharper shadow */
+            'lift': '0 14px 28px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.08)',
+            'gloss': 'inset 0 1px 0 rgba(255,255,255,0.6), 0 4px 12px rgba(0,0,0,0.08)',
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            'slide-up': 'slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            'scale-in': 'scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            scaleIn: {
+              '0%': { transform: 'scale(0.8)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            }
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    /* Inject SF Pro Fonts via Apple System stack */
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: local('SF Pro Display'), local('SFProDisplay-Regular');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Text';
+      src: local('SF Pro Text'), local('SFProText-Regular');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    :root {
+      --primary-color: #DBAAA0;
+
+      /* Higher Contrast Light Mode */
+      --bg-color: #F2F3F5;
+      /* Cooler, slightly darker than white to let cards pop */
+      --surface-color: #FFFFFF;
+
+      --text-main: #050505;
+      /* Near black for sharpest text */
+      --text-secondary: #404040;
+      /* Darker gray for readability */
+      --border-color: #D1D5DB;
+      /* Defined borders */
+
+      --glass-border: rgba(0, 0, 0, 0.08);
+      /* Dark border for glass on light bg */
+    }
+
+    .dark {
+      --bg-color: #000000;
+      /* True black or very dark gray */
+      --surface-color: #1C1C1E;
+      /* iOS dark surface */
+
+      --text-main: #FFFFFF;
+      --text-secondary: #98989D;
+      --border-color: #38383A;
+
+      --glass-border: rgba(255, 255, 255, 0.15);
+    }
+
+    body {
+      -webkit-tap-highlight-color: transparent;
+      background-color: #f3f4f6;
+      font-family: 'SF Pro Display', 'SF Pro Text', 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .color-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .color-input-wrapper input[type="color"] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150%;
+      height: 150%;
+      padding: 0;
+      margin: 0;
+      border: none;
+      cursor: pointer;
+      appearance: none;
+      background: none;
+    }
+
+    /* --- FLOATING GLOSSY NAV --- */
+    .ios-nav {
+      /* Fixed/Absolute Positioning */
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(0);
+      width: calc(100% - 48px);
+      max-width: 340px;
+      height: 72px;
+
+      /* Layout */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 8px;
+      /* Padding for the inner buttons */
+      z-index: 100;
+
+      /* Shape */
+      border-radius: 100px;
+
+      /* High Contrast Glossy Glass Effect (Light Mode) */
+      background-color: rgba(255, 255, 255, 0.85);
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+      /* Borders for sheen and definition */
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      /* Dark subtle border */
+      border-top: 1px solid rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      /* Slightly darker bottom */
+
+      /* Shadows for depth */
+      box-shadow:
+        0 20px 40px -8px rgba(0, 0, 0, 0.2),
+        /* Stronger shadow */
+        inset 0 1px 1px rgba(255, 255, 255, 1);
+      /* Inner lip */
+    }
+
+    .dark .ios-nav {
+      background-color: rgba(30, 30, 30, 0.7);
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Nav Icon Styling */
+    .nav-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #666;
+      /* Darker grey for inactive */
+      background: transparent;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .dark .nav-icon {
+      color: #999;
+    }
+
+    /* Active State */
+    .nav-icon.active {
+      color: #FFFFFF;
+      background: #000000;
+      /* Solid Black */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      transform: none;
+    }
+
+    .dark .nav-icon.active {
+      color: #000000;
+      background: #FFFFFF;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+    }
+
+    .nav-icon svg {
+      transition: transform 0.2s ease;
+    }
+
+    .nav-icon.active svg {
+      transform: scale(1.05);
+    }
+
+    @media (hover: hover) {
+      .nav-icon:not(.active):hover {
+        color: #000000;
+        background: rgba(0, 0, 0, 0.06);
+      }
+
+      .dark .nav-icon:not(.active):hover {
+        color: #FFFFFF;
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .nav-label {
+      display: none;
+    }
+
+    /* --- LIQUID GLASS SHARED --- */
+    .btn-glass,
+    .glass-card {
+      /* Lighter base with tint */
+      background-color: rgba(255, 255, 255, 0.75);
+      background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 242, 245, 0.6) 100%);
+
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+      /* Distinct borders for light mode visibility */
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+      /* Stronger shadows for separation from bg */
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.08),
+        0 2px 4px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+
+      color: var(--text-main);
+    }
+
+    .btn-glass {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      cursor: pointer;
+    }
+
+    .dark .btn-glass,
+    .dark .glass-card {
+      background-color: rgba(40, 40, 40, 0.4);
+      background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      color: #FFFFFF;
+    }
+
+    .btn-glass:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+
+    .dark .btn-glass:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-glass:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /* --- EDITORIAL FONT STYLE --- */
+    .text-editorial {
+      font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      transform: scaleY(1.35);
+      /* Increased height for editorial look */
+      display: inline-block;
+      transform-origin: center;
+    }
+  </style>
+
+  <link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/SideKick/assets/index-D82lnYuI.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
+</html>
