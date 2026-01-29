@@ -29,15 +29,10 @@ When you open the app each morning, SideKick checks the current weather in your 
  AI wardrobe cataloging
 
 - Weather-based outfit generation
-
 - Supabase database integration
-
 - Custom style preferences
-
 - Track your outfit history
-
 - Support for multiple locations
-
 - Share outfits with friends
 
 # 🐛 Known Issues
