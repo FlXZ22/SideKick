@@ -1,60 +1,52 @@
-🧥 SideKick - Your Smart Outfit Buddy
+# 🧥 SideKick - Your Smart Outfit Buddy
+
 Never struggle with "what to wear" again. SideKick is an AI-powered outfit generator that analyzes your wardrobe and the weather to suggest the perfect outfit for your day.
 
-✨ Features
-📸 Smart Wardrobe Management - Snap photos of your clothes and let AI catalog your wardrobe automatically
+🌐 **[Try SideKick Live](https://flxz22.github.io/SideKick/)**
 
-🌤️ Weather-Based Recommendations - Get outfit suggestions tailored to real-time temperature and weather conditions
+## ✨ Features
 
-🤖 AI-Powered Coordination - Intelligent style matching based on your available clothing
+- 📸 **Smart Wardrobe Management** - Snap photos of your clothes and let AI catalog your wardrobe automatically
+- 🌤️ **Weather-Based Recommendations** - Get outfit suggestions tailored to real-time temperature and weather conditions
+- 🤖 **AI-Powered Coordination** - Intelligent style matching based on your available clothing
+- ⚡ **Quick Daily Outfits** - No more morning outfit panic, just open the app and go
 
-⚡ Quick Daily Outfits - No more morning outfit panic, just open the app and go
+## 🚀 How It Works
 
-🚀 How It Works
-Getting started is super simple. First, you take pictures of the clothes in your wardrobe. The AI recognizes what each item is and organizes everything for you.
+Getting started is super simple. First, you take pictures of the clothes in your wardrobe. The AI recognizes what each item is and organizes everything for you. 
 
 When you open the app each morning, SideKick checks the current weather in your area. Then it puts together an outfit that actually makes sense for the temperature and conditions outside. No more freezing in a t-shirt or sweating in layers you don't need.
 
-🛠️ Tech Stack
-[Add your technologies here, like Python, React, TensorFlow, OpenWeather API, etc.]
+## 🛠️ Tech Stack
 
-📦 Installation
-bash
-# Clone the repository
-git clone https://github.com/yourusername/sidekick.git
+- **Frontend**: HTML, CSS, JavaScript, React
+- **Build Tool**: Vite
+- **AI**: Puter.js
+- **Database**: Supabase (coming soon)
+- **Hosting**: GitHub Pages
 
-# Navigate to project directory
-cd sidekick
-
-# Install dependencies
-[Add your installation commands]
-
-# Run the app
-[Add your run commands]
-🎯 What's Coming Next
+# 🎯 What's Coming Next
  AI wardrobe cataloging
 
- Weather-based outfit generation
+- Weather-based outfit generation
 
- Custom style preferences
+- Supabase database integration
 
- Track your outfit history
+- Custom style preferences
 
- Support for multiple locations
+- Track your outfit history
 
- Share outfits with friends
+- Support for multiple locations
 
-🐛 Known Issues
+- Share outfits with friends
+
+# 🐛 Known Issues
 This is a beta version and I'm still working on improving it. If you find any bugs or have ideas for new features, feel free to let me know!
 
-🤝 Contributing
+# 🤝 Contributing
 Want to help make SideKick better? Contributions are welcome! You can open issues or submit pull requests anytime.
 
-📝 License
-[Choose your license - MIT, Apache 2.0, etc.]
-
-👨‍💻 Author
-Built with ❤️ by [Your Name]
+# 👨‍💻 Author
+Built with ❤️ by Metis
 
 ⭐ If you like SideKick, give it a star!
-
